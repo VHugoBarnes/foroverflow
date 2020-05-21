@@ -3,11 +3,12 @@ from django.utils import timezone
 from usuario.models import Usuario
 
 # Create your models here.
-class Foro(models.Model):
 
-    id_foro = models.IntegerField(primary_key=True)
-    nombre_foro = models.CharField(max_length=50, unique=True)
-    descripcion_foro = models.CharField(max_length=100)
+class Foro(models.Model):
+    
+    id_foro = models.IntegerField(primary_key=True, default=1)
+    nombre_foro = models.CharField(max_length=50, unique=True, default='Foro')
+    descripcion_foro = models.CharField(max_length=100, default='Un foro de foroverflow')
     fecha_creacion = models.DateTimeField(default=timezone.now)
     foto_foro = models.ImageField(upload_to='', default='')
 
@@ -17,11 +18,11 @@ class Foro(models.Model):
 
 class Post(models.Model):
 
-    id_post = models.IntegerField(primary_key=True)
-    id_foro = models.ForeignKey(Foro, on_delete=models.CASCADE)
-    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    titulo_post = models.CharField(max_length=200)
-    contenido_post = models.TextField()
+    id_post = models.IntegerField(primary_key=True, default=1)
+    id_foro = models.ForeignKey(Foro, on_delete=models.CASCADE, default=1)
+    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, default=1)
+    titulo_post = models.CharField(max_length=200,default='')
+    contenido_post = models.TextField(default='')
     votos_post = models.IntegerField(default=0)
 
     def __str__(self):
@@ -30,10 +31,10 @@ class Post(models.Model):
 
 class Comentario(models.Model):
 
-    id_comentario = models.IntegerField(primary_key=True)
-    id_post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    contenido_comentario = models.TextField()
+    id_comentario = models.IntegerField(primary_key=True, default=1)
+    id_post = models.ForeignKey(Post, on_delete=models.CASCADE , default=1)
+    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, default=1)
+    contenido_comentario = models.TextField(default='')
     votos_comentario = models.IntegerField(default=0)
 
     def __str__(self):
