@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Icon -->
+    <link rel="shortcut icon" href="{% static 'img/logo.png' %}" type="image/x-icon">
+    <!-- Fuente Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"> 
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <!-- Titulo -->
+    <h1 class="titulo">Foroverflow</h1>
+    <!-- Imagen izquierda -->
+    <div class="left-image">
+        <img src="{% static "img/fondo.png" %}" alt="">
+    </div>
+
+    <div class="formulario">
+    {% block content %}
+    {% endblock %}
+    </div>
+</body>
+</html>

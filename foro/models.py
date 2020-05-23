@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from usuario.models import Usuario
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -20,7 +20,7 @@ class Post(models.Model):
 
     id_post = models.IntegerField(primary_key=True, default=1)
     id_foro = models.ForeignKey(Foro, on_delete=models.CASCADE, default=1)
-    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, default=1)
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     titulo_post = models.CharField(max_length=200,default='')
     contenido_post = models.TextField(default='')
     votos_post = models.IntegerField(default=0)
@@ -33,7 +33,7 @@ class Comentario(models.Model):
 
     id_comentario = models.IntegerField(primary_key=True, default=1)
     id_post = models.ForeignKey(Post, on_delete=models.CASCADE , default=1)
-    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, default=1)
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     contenido_comentario = models.TextField(default='')
     votos_comentario = models.IntegerField(default=0)
 
