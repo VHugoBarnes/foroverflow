@@ -12,12 +12,29 @@
 
     <main role="main" class="container">
 
+        <!-- ENCABEZADO FORO -->
+        <div class="container mx-0 px-0 my-5">
+            <div class="row border-bottom mx-0 px-0 my-5">
+                <div class="col-md-auto mb-2">
+                    <img class="rounded-circle img-thumbnail imagen" src="{{ post.id_foro.foto_foro.url }}" alt="">
+                </div>
+                <div class="row mx-0 px-0 my-5">
+                    <div class="col-md-auto mb-2 pl-0 pr-2">
+                        <h1 class="titulo">{{ post.id_foro }}</h1>
+                    </div>
+                    <div class="col-md-auto mb-2 px-0">
+                        <h1 class="titulo">Forum</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row mt-5">
             <!-- SECCION DE POSTS -->
             <div class="col-md-8">
                 <!-- POST DETAIL -->
                 <article class="media content-section">
-                <img class="rounded-circle article-img" src="{{ post.id_foro.foto_foro.url }}">
+                <!-- <img class="rounded-circle article-img" src="{{ post.id_foro.foto_foro.url }}"> -->
                 <div class="media-body">
                     <div class="container article-metadata">
                         <div class="row">
@@ -44,29 +61,16 @@
 
             </div>
             <!-- COLUMNA DERECHA -->
-            <div class="col-md-4">
-                <div class="right-content-section">
-                  <h3>Our Forums</h3>
-                  <p class='text-muted'>Take a look at the forums what we got for you.
-                    <ul class="list-group">
-                        {% for foro in foros %}
-                            <div class="container px-1">
-                                <a href="#">
-                                    <div class="row sub-content-section list-group-item-action m-0">
-                                        <div class="col-md-auto p-0 py-1">
-                                            <img class="rounded-circle article-img" src="{{ foro.foto_foro.url}}">
-                                        </div>
-                                        <div class="col-md-auto p-0 py-4">
-                                            <span class="list-group-item-action">f/{{foro.nombre_foro}}</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </ul>
-                  </p>
+            <div class="col-4 pl-5">
+                <div class="card" style="width: 20rem;">
+                    <!-- <img src="{{ user.profile.image.url }}" class="img-thumbnail" class="card-img-top"> -->
+                    <div class="card-body">
+                        <h1 class="card-title titulo">About community</h1>
+                        <p class="card-text">{{ post.id_foro.descripcion_foro }}</p>
+                        <p class="card-text text-muted">Community created on: {{ post.id_foro.fecha_creacion }}</p>
+                        <a href="#" class="btn btn-primary px-5 mr-5 ml-4 mt-4">Create a Post</a>
+                    </div>
                 </div>
-
             </div>
         </div>
         

@@ -9,9 +9,13 @@
     {{ user }}
 {% endblock %}
 
+{% block autenticacion %}
+    <a class="dropdown-item" href="{% url 'user-profile' user %}">Profile</a>
+{% endblock %}
+
 {% block content %}
 
-    <h2 class="border-bottom mx-5 titulo">Profile</h2>
+    <h2 class="border-bottom mx-5 titulo">{{ requested_user }}'s Profile</h2>
 
     <!-- CONTAINER -->
     <div class="container-md mx-5 mt-3">
@@ -30,13 +34,15 @@
                     <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post" role="tab" aria-controls="posts" aria-selected="true">Posts</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Edit Profile</a>
-                    </li>
+                    {% if requested_user.username == user %}
+                        <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Edit Profile</a>
+                        </li>
+                    {% endif %}
                 </ul>
                 <!-- CONTENTS -->
                 <div class="tab-content pt-4 pr-5 mr-5 .formulario" id="myTabContent">
-                <!-- NAV CONTENT 1 -->
+                <!-- NAV CONTENT 1 POSTS -->
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
                         {% for post in posts %}
                             <article class="media content-section">
@@ -60,13 +66,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h2><a class="article-title" href="#">{{ post.titulo_post }}</a></h2>
+                                <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.id_post %}">{{ post.titulo_post }}</a></h2>
                                 <p class="article-content">{{ post.contenido_post|truncatewords:30 }}</p>
                             </div>
                             </article>
                         {% endfor %}
                     </div>
-                <!-- NAV CONTENT 2 -->
+                <!-- NAV CONTENT 2 SOLO MOSTRAR SI ES EL PERFIL DEL USUARIO AUTH-->
                     <div class="tab-pane fade pr-5 mr-5" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
@@ -83,11 +89,13 @@
             <!-- USER INFO CARD -->
             <div class="col-4 mt-2 pl-5">
                 <div class="card" style="width: 18rem;">
-                    <img src="{{ user.profile.image.url }}" class="img-thumbnail" class="card-img-top">
+                    <img src="{{ requested_user.profile.image.url }}" class="img-thumbnail" class="card-img-top">
                     <div class="card-body">
-                        <h1 class="card-title titulo">{{ user.username }}</h1>
-                        <p class="card-text">{{ user.email }}</p>
+                        <h1 class="card-title titulo">{{ requested_user.username }}</h1>
+                        <p class="card-text">{{ requested_user.email }}</p>
+                        {% if user == requested_user.username %}
                         <a href="#" class="btn btn-primary px-5 mx-3">Create a Post</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

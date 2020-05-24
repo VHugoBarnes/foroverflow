@@ -35,7 +35,8 @@
               {% endblock %}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="{% url 'user-profile' %}">Profile</a>
+              {% block autenticacion %}
+              {% endblock %}
               <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
             </div>
         </div>

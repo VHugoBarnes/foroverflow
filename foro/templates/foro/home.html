@@ -8,6 +8,10 @@
     {{ user }}
 {% endblock %}
 
+{% block autenticacion %}
+    <a class="dropdown-item" href="{% url 'user-profile' user %}">Profile</a>
+{% endblock %}
+
 {% block content %}
 
     <main role="main" class="container">
@@ -45,7 +49,7 @@
                                     Posted by 
                                 </div>
                                 <div class="col-md-auto p-0">
-                                    <a class="ml-1" href="#">u/{{ post.id_usuario }}</a>
+                                    <a class="ml-1" href="{% url 'user-profile' post.id_usuario %}">u/{{ post.id_usuario }}</a>
                                 </div>
                             </div>
                         </div>

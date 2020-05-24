@@ -23,11 +23,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('u/profile/', user_view.user_profile, name='user-profile'),
+    path('u/<user_name>/', user_view.user_profile, name='user-profile'),
+    path('user/<profile>', user_view.prueba, name='prueba'),
     path('register/', user_view.registro, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='usuario/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='usuario/logout.html'), name='logout'),
-    path('prueba/', user_view.prueba, name='prueba'),
     path('', include('foro.urls')),
 ]
 

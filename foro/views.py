@@ -3,13 +3,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Foro
-from django.views.generic import (
-    DetailView,
-    CreateView,
-    ListView,
-    UpdateView,
-    DeleteView,
-)
 
 
 @login_required
@@ -18,6 +11,7 @@ def home(request):
     context = {
         'posts': Post.objects.all(),
         'foros': Foro.objects.all(),
+        'user': request.user.username,
     }
     return render(request, 'foro/home.html', context)
 
@@ -31,6 +25,7 @@ def post_detail(request, forum, id):
     context = {
         'post': post,
         'forum': forum,
+        'user': request.user.username,
     }
 
     return render(request, "foro/post_detail.html", context)

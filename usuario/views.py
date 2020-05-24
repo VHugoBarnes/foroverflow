@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.contrib import messages
 
 from usuario.forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
@@ -22,13 +23,17 @@ def registro(request):
     return render(request, 'usuario/registro.html', {'form':form})
 
 
-def prueba(request):
+def prueba(request, profile):
+
+    prof = User.objects.get(username=profile)
 
     return render(request, 'usuario/base.html', {'title':'Prueba XD'})
 
 
 @login_required
-def user_profile(request):
+def user_profile(request, user_name):
+
+    user_name_ = User.objects.get(username=user_name)
 
     if request.method == 'POST':
         
@@ -42,16 +47,18 @@ def user_profile(request):
             p_form.save()
             messages.success(request, f'Your account has been updated')
             return redirect('user-profile')
-
     else:
+
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-        user_posts = Post.objects.filter(id_usuario=request.user)
+        user_posts = Post.objects.filter(id_usuario=user_name_)
 
     context = {
         'u_form': u_form,
         'p_form': p_form,
         'posts': user_posts,
+        'user': request.user.username,
+        'requested_user': User.objects.get(username=user_name)
     }
 
     return render(request, 'usuario/profile/profile.html', context)
