@@ -1,0 +1,89 @@
+{% extends 'foro/base.html' %}
+
+{% block title %}
+    Foroverlow
+{% endblock %}
+
+{% block username %}
+    {{ user }}
+{% endblock %}
+
+{% block content %}
+
+    <main role="main" class="container">
+
+        <div class="row mt-5">
+            <!-- SECCION DE POSTS -->
+            <div class="col-md-8">
+
+                <div class="container content-section">
+                    <div class="row">
+                        <div class="col-sm-8 mt-2">
+                            Want to ask a question?
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="#" class="btn btn-primary px-5 mx-3">Post</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- POSTS -->
+                {% for post in posts %}
+                    <article class="media content-section">
+                    <img class="rounded-circle article-img" src="{{ post.id_foro.foto_foro.url }}">
+                    <div class="media-body">
+                        <div class="container article-metadata">
+                            <div class="row">
+                                <div class="col-md-auto p-0">
+                                    <a class="" href="#"> f/{{ post.id_foro }}</a>
+                                </div>
+                                <div class="col-md-auto p-0">
+                                    <span class="dot mx-1">
+                                        •
+                                    </span>
+                                </div>
+                                <div class="col-md-auto p-0">
+                                    Posted by 
+                                </div>
+                                <div class="col-md-auto p-0">
+                                    <a class="ml-1" href="#">u/{{ post.id_usuario }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.id_post %}">{{ post.titulo_post }}</a></h2>
+                        <p class="article-content">{{ post.contenido_post|truncatewords:30 }}</p>
+                    </div>
+                    </article>
+                {% endfor %}
+
+            </div>
+            <!-- COLUMNA DERECHA -->
+            <div class="col-md-4">
+                <div class="right-content-section">
+                  <h3>Our Forums</h3>
+                  <p class='text-muted'>Take a look at the forums what we got for you.
+                    <ul class="list-group">
+                        {% for foro in foros %}
+                            <div class="container px-1">
+                                <a href="#">
+                                    <div class="row sub-content-section list-group-item-action m-0">
+                                        <div class="col-md-auto p-0 py-1">
+                                            <img class="rounded-circle article-img" src="{{ foro.foto_foro.url}}">
+                                        </div>
+                                        <div class="col-md-auto p-0 py-4">
+                                            <span class="list-group-item-action">f/{{foro.nombre_foro}}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                  </p>
+                </div>
+
+            </div>
+        </div>
+        
+
+    </main>
+
+{% endblock %}

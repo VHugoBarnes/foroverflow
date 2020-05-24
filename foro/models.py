@@ -10,7 +10,7 @@ class Foro(models.Model):
     nombre_foro = models.CharField(max_length=50, unique=True, default='Foro')
     descripcion_foro = models.CharField(max_length=100, default='Un foro de foroverflow')
     fecha_creacion = models.DateTimeField(default=timezone.now)
-    foto_foro = models.ImageField(upload_to='', default='')
+    foto_foro = models.ImageField(upload_to='forum_pics', default='')
 
     def __str__(self):
         return self.nombre_foro
@@ -23,7 +23,6 @@ class Post(models.Model):
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     titulo_post = models.CharField(max_length=200,default='')
     contenido_post = models.TextField(default='')
-    votos_post = models.IntegerField(default=0)
 
     def __str__(self):
         return self.titulo_post

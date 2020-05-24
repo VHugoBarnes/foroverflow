@@ -1,0 +1,97 @@
+{% extends 'usuario/profile/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Foroverlow
+{% endblock %}
+
+{% block username %}
+    {{ user }}
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="border-bottom mx-5 titulo">Profile</h2>
+
+    <!-- CONTAINER -->
+    <div class="container-md mx-5 mt-3">
+        <div class="row justify-content-between">
+            <!-- NAV FOR EDITING INFO AND VIEWING USER POSTS -->
+            <div class="col mt-2">
+
+                <!-- UPDATE ALERT -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="alert alert-success">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post" role="tab" aria-controls="posts" aria-selected="true">Posts</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Edit Profile</a>
+                    </li>
+                </ul>
+                <!-- CONTENTS -->
+                <div class="tab-content pt-4 pr-5 mr-5 .formulario" id="myTabContent">
+                <!-- NAV CONTENT 1 -->
+                    <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
+                        {% for post in posts %}
+                            <article class="media content-section">
+                            <img class="rounded-circle article-img" src="{{ post.id_foro.foto_foro.url }}">
+                            <div class="media-body">
+                                <div class="container article-metadata">
+                                    <div class="row">
+                                        <div class="col-md-auto p-0">
+                                            <a class="" href="#"> f/{{ post.id_foro }}</a>
+                                        </div>
+                                        <div class="col-md-auto p-0">
+                                            <span class="dot mx-1">
+                                                •
+                                            </span>
+                                        </div>
+                                        <div class="col-md-auto p-0">
+                                            Posted by 
+                                        </div>
+                                        <div class="col-md-auto p-0">
+                                            <a class="ml-1" href="#">u/{{ post.id_usuario }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h2><a class="article-title" href="#">{{ post.titulo_post }}</a></h2>
+                                <p class="article-content">{{ post.contenido_post|truncatewords:30 }}</p>
+                            </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                <!-- NAV CONTENT 2 -->
+                    <div class="tab-pane fade pr-5 mr-5" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <fieldset class="pr-5 mr-5">
+                                <h2>Update your info</h2>
+                                {{ u_form|crispy}}
+                                {{ p_form|crispy}}
+                            </fieldset>
+                            <button type="submit" class="btn btn-primary"><span>Update</span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- USER INFO CARD -->
+            <div class="col-4 mt-2 pl-5">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ user.profile.image.url }}" class="img-thumbnail" class="card-img-top">
+                    <div class="card-body">
+                        <h1 class="card-title titulo">{{ user.username }}</h1>
+                        <p class="card-text">{{ user.email }}</p>
+                        <a href="#" class="btn btn-primary px-5 mx-3">Create a Post</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
