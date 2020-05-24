@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block username %}
-    {{ user }}
+    {{ user.username }}
 {% endblock %}
 
 {% block autenticacion %}
@@ -34,7 +34,7 @@
                     <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post" role="tab" aria-controls="posts" aria-selected="true">Posts</a>
                     </li>
-                    {% if requested_user.username == user %}
+                    {% if requested_user.username == user.username %}
                         <li class="nav-item" role="presentation">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Edit Profile</a>
                         </li>
@@ -66,8 +66,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.id_post %}">{{ post.titulo_post }}</a></h2>
-                                <p class="article-content">{{ post.contenido_post|truncatewords:30 }}</p>
+                                <div class="row">
+                                    <div class="col col-fluid">
+                                        <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.id_post %}">{{ post.title }}</a></h2>
+                                    </div>
+                                    <div class="col col-sm-auto">
+                                        {% if  user == post.id_usuario %}
+                                        <a href="{% url 'edit-post' forum=post.id_foro id=post.id_post %}" class="btn btn-primary">
+                                            <svg class="bi bi-pencil-square mt-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                            </svg>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <p class="article-content">{{ post.content|truncatewords:30 }}</p>
                             </div>
                             </article>
                         {% endfor %}
@@ -93,8 +107,8 @@
                     <div class="card-body">
                         <h1 class="card-title titulo">{{ requested_user.username }}</h1>
                         <p class="card-text">{{ requested_user.email }}</p>
-                        {% if user == requested_user.username %}
-                        <a href="#" class="btn btn-primary px-5 mx-3">Create a Post</a>
+                        {% if user.username == requested_user.username %}
+                        <a href="{% url 'create-post' %}" class="btn btn-primary px-5 mx-3">Create a Post</a>
                         {% endif %}
                     </div>
                 </div>

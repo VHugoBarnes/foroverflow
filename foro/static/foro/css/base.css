@@ -86,7 +86,7 @@ a.article-title:hover {
 }
 
 .imagen {
-    height: 150px;
-    width: 150px;
+    height: 150px !important;
+    width: 150px !important;
     border: 1px solid #dddddd !important;
 }

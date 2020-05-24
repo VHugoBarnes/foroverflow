@@ -1,0 +1,53 @@
+{% extends 'foro/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Foroverlow
+{% endblock %}
+
+{% block username %}
+    {{ user }}
+{% endblock %}
+
+{% block autenticacion %}
+    <a class="dropdown-item" href="{% url 'user-profile' user %}">Profile</a>
+{% endblock %}
+
+{% block content %}
+
+<main role="main" class="container">
+
+    <div class="row mt-5">
+        <!-- CREATE POST FORM -->
+        <div class="col-md-8">
+            <!-- FORM -->
+            
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset class="pr-5 mr-5">
+                    <h2>Create a post</h2>
+                    {{ form|crispy}}
+                </fieldset>
+                <button type="submit" class="btn btn-primary"><span>Create Post</span></button>
+            </form>
+
+        </div>
+        <!-- COLUMNA DERECHA -->
+        <div class="col-4 mt-2 pl-5">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ requested_user.profile.image.url }}" class="img-thumbnail" class="card-img-top">
+                <div class="card-body">
+                    <h1 class="card-title titulo">{{ requested_user.username }}</h1>
+                    <p class="card-text">{{ requested_user.email }}</p>
+                    {% if user == requested_user.username %}
+                    <a href="" class="btn btn-primary px-5 mx-3">Create a Post</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</main>
+
+{% endblock %}

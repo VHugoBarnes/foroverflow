@@ -21,11 +21,11 @@ class Post(models.Model):
     id_post = models.IntegerField(primary_key=True, default=1)
     id_foro = models.ForeignKey(Foro, on_delete=models.CASCADE, default=1)
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    titulo_post = models.CharField(max_length=200,default='')
-    contenido_post = models.TextField(default='')
+    title = models.CharField(max_length=200,default='')
+    content = models.TextField(default='')
 
     def __str__(self):
-        return self.titulo_post
+        return self.title
 
 
 class Comentario(models.Model):

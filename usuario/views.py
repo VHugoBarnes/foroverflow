@@ -57,7 +57,7 @@ def user_profile(request, user_name):
         'u_form': u_form,
         'p_form': p_form,
         'posts': user_posts,
-        'user': request.user.username,
+        'user': request.user,
         'requested_user': User.objects.get(username=user_name)
     }
 

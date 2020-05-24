@@ -26,7 +26,7 @@
                             Want to ask a question?
                         </div>
                         <div class="col-sm-4">
-                            <a href="#" class="btn btn-primary px-5 mx-3">Post</a>
+                            <a href="{% url 'create-post' %}" class="btn btn-primary px-5 mx-3">Post</a>
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,8 @@
                                 </div>
                             </div>
                         </div>
-                        <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.id_post %}">{{ post.titulo_post }}</a></h2>
-                        <p class="article-content">{{ post.contenido_post|truncatewords:30 }}</p>
+                        <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.id_post %}">{{ post.title }}</a></h2>
+                        <p class="article-content">{{ post.content|truncatewords:30 }}</p>
                     </div>
                     </article>
                 {% endfor %}
