@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.id_post %}">{{ post.title }}</a></h2>
+                        <h2><a class="article-title" href="{% url 'post-detail' forum=post.id_foro id=post.pk %}">{{ post.title }}</a></h2>
                         <p class="article-content">{{ post.content|truncatewords:30 }}</p>
                     </div>
                     </article>

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class Foro(models.Model):
     
-    id_foro = models.IntegerField(primary_key=True, default=1)
+    # id_foro = models.IntegerField(primary_key=True, default=1)
     nombre_foro = models.CharField(max_length=50, unique=True, default='Foro')
     descripcion_foro = models.CharField(max_length=100, default='Un foro de foroverflow')
     fecha_creacion = models.DateTimeField(default=timezone.now)
@@ -18,7 +18,7 @@ class Foro(models.Model):
 
 class Post(models.Model):
 
-    id_post = models.IntegerField(primary_key=True, default=1)
+    # id_post = models.IntegerField(primary_key=True, default=1)
     id_foro = models.ForeignKey(Foro, on_delete=models.CASCADE, default=1)
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=200,default='')
@@ -30,7 +30,7 @@ class Post(models.Model):
 
 class Comentario(models.Model):
 
-    id_comentario = models.IntegerField(primary_key=True, default=1)
+    # id_comentario = models.IntegerField(primary_key=True, default=1)
     id_post = models.ForeignKey(Post, on_delete=models.CASCADE , default=1)
     id_usuario = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     contenido_comentario = models.TextField(default='')
