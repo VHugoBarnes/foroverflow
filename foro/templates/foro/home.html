@@ -30,6 +30,13 @@
                         </div>
                     </div>
                 </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="alert alert-success">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+
                 <!-- POSTS -->
                 {% for post in posts %}
                     <article class="media content-section">

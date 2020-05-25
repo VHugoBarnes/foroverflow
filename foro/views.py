@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
 
-from .models import Post, Foro
-from .forms import PostForm
+from .models import Post, Foro, Comentario
+from .forms import PostForm, CommentForm
 
 
 @login_required
@@ -19,24 +20,36 @@ def home(request):
 @login_required
 def post_detail(request, forum, id):
 
-    print("="*60)
-    print("ENTRO AL METODO POST_DETAIL")
-    print("="*60)
-
     post = Post.objects.get(pk=id)
     forum = Foro.objects.get(nombre_foro=forum)
+    comments = Comentario.objects.filter(id_post=id).order_by('-pk')
 
-    print("="*60)
-    print("ENTRO AL METODO POST_DETAIL")
-    print("="*60)
+    validacion = Post.objects.filter(id_foro=forum, pk=id)
 
-    context = {
-        'post': post,
-        'forum': forum,
-        'user': request.user,
-    }
+    if validacion.count() > 0:
+        if request.method == 'POST':
 
-    return render(request, "foro/post_detail.html", context)
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.id_usuario = request.user
+                comment.id_post = post
+                comment.save()
+                return redirect('post-detail', forum=forum.nombre_foro, id=post.pk)
+        else:
+            form = CommentForm()
+
+        context = {
+            'post': post,
+            'forum': forum,
+            'user': request.user,
+            'comment_form': form,
+            'comments': comments,
+        }
+
+        return render(request, "foro/post_detail.html", context)
+    else:
+        return render(request, "foro/404.html", {})
 
 
 @login_required
@@ -104,6 +117,7 @@ def delete_post(request, id):
             print("ENTRO AL METODO POST")
             print("="*60)
             post.delete()
+            messages.success(request, f'Post deleted successfully!')
             return redirect('home')
         
         context = {

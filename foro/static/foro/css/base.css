@@ -5,6 +5,12 @@
 .titulo {
     padding-top: 2%;
     color: #4e4949;
+    text-decoration: none !important;
+}
+
+.titulo2 > a:visited, .titulo2 > a:active, .titulo2 > a{
+    color: #4e4949 !important;
+    text-decoration: none !important;
 }
 
 .titulo > a:visited, .titulo > a:active, .titulo > a{
@@ -89,4 +95,12 @@ a.article-title:hover {
     height: 150px !important;
     width: 150px !important;
     border: 1px solid #dddddd !important;
+}
+
+.requiredField {
+    display: none;
+}
+
+.page-wrap {
+    min-height: 100vh;
 }

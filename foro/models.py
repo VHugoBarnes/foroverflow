@@ -37,4 +37,4 @@ class Comentario(models.Model):
     votos_comentario = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.id_comentario
+        return self.contenido_comentario
