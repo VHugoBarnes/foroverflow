@@ -1,11 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import (
-    UpdateView,
-)
-
 from .models import Post, Foro
 from .forms import PostForm
 
@@ -76,7 +71,7 @@ def edit_post(request, forum, id):
     print("="*60)
 
     post = get_object_or_404(Post, pk=id)
-
+    
     if request.user == post.id_usuario:
         if request.method == 'POST':
             
@@ -90,10 +85,32 @@ def edit_post(request, forum, id):
         else:
             form = PostForm(instance=post)
         context = {
-        'form': form,
-        'requested_user': request.user,
+            'post':Post.objects.get(pk=id),
+            'form': form,
+            'requested_user': request.user,
         }
-        return render(request, "foro/create-post.html", context)
+        return render(request, "foro/edit-post.html", context)
+    else:
+        return redirect('home')
+
+@login_required
+def delete_post(request, id):
+
+    post = Post.objects.get(pk=id)
+
+    if request.user == post.id_usuario:
+        if request.method == 'POST':
+            print("="*60)
+            print("ENTRO AL METODO POST")
+            print("="*60)
+            post.delete()
+            return redirect('home')
+        
+        context = {
+            'post':Post.objects.get(pk=id),
+            'requested_user': request.user,
+        }
+        return render(request, "foro/delete-post.html", context)
     else:
         return redirect('home')
 
@@ -120,3 +137,4 @@ def foro(request, forum):
     }
 
     return render(request, "foro/forum.html", context)
+
