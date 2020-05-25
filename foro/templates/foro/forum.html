@@ -1,0 +1,101 @@
+{% extends 'foro/base.html' %}
+
+{% block title %}
+    Foroverlow
+{% endblock %}
+
+{% block username %}
+    {{ user }}
+{% endblock %}
+
+{% block autenticacion %}
+    <a class="dropdown-item" href="{% url 'user-profile' user %}">Profile</a>
+{% endblock %}
+
+{% block content %}
+
+    <main role="main" class="container">
+
+        <!-- ENCABEZADO FORO -->
+        <div class="container mx-0 px-0 my-5">
+            <div class="row border-bottom mx-0 px-0 my-5">
+                <div class="col-md-auto mb-2">
+                    <img class="rounded-circle img-thumbnail imagen" src="{{ forum.foto_foro.url }}" alt="">
+                </div>
+                <div class="row mx-0 px-0 my-5">
+                    <div class="col-md-auto mb-2 pl-0 pr-2">
+                        <h1 class="titulo">{{ forum.nombre_foro }}</h1>
+                    </div>
+                    <div class="col-md-auto mb-2 px-0">
+                        <h1 class="titulo">Forum</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <!-- SECCION DE POSTS -->
+            <div class="col-md-8">
+                
+                {% for post in posts %}
+                    <!-- POST DETAIL -->
+                    <article class="media content-section">
+                        <!-- <img class="rounded-circle article-img" src="{{ post.id_foro.foto_foro.url }}"> -->
+                        <div class="media-body">
+                            <div class="container article-metadata">
+                                <div class="row">
+                                    <div class="col-md-auto p-0">
+                                        <a class="" href="#"> f/{{ post.id_foro }}</a>
+                                    </div>
+                                    <div class="col-md-auto p-0">
+                                        <span class="dot mx-1">
+                                            •
+                                        </span>
+                                    </div>
+                                    <div class="col-md-auto p-0">
+                                        Posted by 
+                                    </div>
+                                    <div class="col-md-auto p-0">
+                                        <a class="ml-1" href="{% url 'user-profile' post.id_usuario %}">u/{{ post.id_usuario }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-fluid">
+                                    <h2 class="article-title">{{ post.title }}</h2>
+                                </div>
+                                <div class="col col-sm-auto">
+                                    {% if  user == post.id_usuario %}
+                                    <a href="{% url 'edit-post' forum=post.id_foro id=post.pk %}" class="btn btn-primary">
+                                        <svg class="bi bi-pencil-square mt-1" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        </svg>
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <p class="article-content">{{ post.content }}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+
+            </div>
+            <!-- COLUMNA DERECHA -->
+            <div class="col-4 pl-5">
+                <div class="card" style="width: 20rem;">
+                    <!-- <img src="{{ user.profile.image.url }}" class="img-thumbnail" class="card-img-top"> -->
+                    <div class="card-body">
+                        <h1 class="card-title titulo">About community</h1>
+                        <p class="card-text">{{ forum.descripcion_foro }}</p>
+                        <p class="card-text text-muted">Community created on: {{ forum.fecha_creacion }}</p>
+                        <a href="{% url 'create-post' %}" class="btn btn-primary px-5 mr-5 ml-4 mt-4">Create a Post</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </main>
+
+{% endblock %}

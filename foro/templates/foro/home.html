@@ -38,7 +38,7 @@
                         <div class="container article-metadata">
                             <div class="row">
                                 <div class="col-md-auto p-0">
-                                    <a class="" href="#"> f/{{ post.id_foro }}</a>
+                                    <a class="" href="{% url 'forum' forum=post.id_foro %}"> f/{{ post.id_foro }}</a>
                                 </div>
                                 <div class="col-md-auto p-0">
                                     <span class="dot mx-1">
@@ -68,7 +68,7 @@
                     <ul class="list-group">
                         {% for foro in foros %}
                             <div class="container px-1">
-                                <a href="#">
+                                <a href="{% url 'forum' forum=foro.nombre_foro %}">
                                     <div class="row sub-content-section list-group-item-action m-0">
                                         <div class="col-md-auto p-0 py-1">
                                             <img class="rounded-circle article-img" src="{{ foro.foto_foro.url}}">

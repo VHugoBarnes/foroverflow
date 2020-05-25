@@ -20,11 +20,11 @@
         <div class="container mx-0 px-0 my-5">
             <div class="row border-bottom mx-0 px-0 my-5">
                 <div class="col-md-auto mb-2">
-                    <img class="rounded-circle img-thumbnail imagen" src="{{ post.id_foro.foto_foro.url }}" alt="">
+                    <img class="rounded-circle img-thumbnail imagen" src="{{ forum.foto_foro.url }}" alt="">
                 </div>
                 <div class="row mx-0 px-0 my-5">
                     <div class="col-md-auto mb-2 pl-0 pr-2">
-                        <h1 class="titulo">{{ post.id_foro }}</h1>
+                        <h1 class="titulo">{{ forum.nombre_foro }}</h1>
                     </div>
                     <div class="col-md-auto mb-2 px-0">
                         <h1 class="titulo">Forum</h1>
@@ -54,7 +54,7 @@
                                 Posted by 
                             </div>
                             <div class="col-md-auto p-0">
-                                <a class="ml-1" href="#">u/{{ post.id_usuario }}</a>
+                                <a class="ml-1" href="{% url 'user-profile' post.id_usuario %}">u/{{ post.id_usuario }}</a>
                             </div>
                         </div>
                     </div>

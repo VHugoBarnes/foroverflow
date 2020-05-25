@@ -14,7 +14,7 @@ from .forms import PostForm
 def home(request):
 
     context = {
-        'posts': Post.objects.all(),
+        'posts': Post.objects.all().order_by('-pk'),
         'foros': Foro.objects.all(),
         'user': request.user.username,
     }
@@ -24,8 +24,16 @@ def home(request):
 @login_required
 def post_detail(request, forum, id):
 
+    print("="*60)
+    print("ENTRO AL METODO POST_DETAIL")
+    print("="*60)
+
     post = Post.objects.get(pk=id)
     forum = Foro.objects.get(nombre_foro=forum)
+
+    print("="*60)
+    print("ENTRO AL METODO POST_DETAIL")
+    print("="*60)
 
     context = {
         'post': post,
@@ -63,6 +71,10 @@ def create_post(request):
 @login_required
 def edit_post(request, forum, id):
 
+    print("="*60)
+    print("ENTRO AL METODO EDIT_POST")
+    print("="*60)
+
     post = get_object_or_404(Post, pk=id)
 
     if request.user == post.id_usuario:
@@ -84,3 +96,27 @@ def edit_post(request, forum, id):
         return render(request, "foro/create-post.html", context)
     else:
         return redirect('home')
+
+
+@login_required
+def foro(request, forum):
+
+    print("="*60)
+    print("ENTRO AL METODO FORO")
+    print("="*60)
+
+    foro = get_object_or_404(Foro, nombre_foro=forum)
+    posts = Post.objects.filter(id_foro=foro).order_by('-pk')
+    forum = Foro.objects.get(nombre_foro=forum)
+    print("="*60)
+    print(forum)
+    print(posts)
+    print("="*60)
+
+    context = {
+        'forum': forum,
+        'user': request.user,
+        'posts': posts, 
+    }
+
+    return render(request, "foro/forum.html", context)

@@ -51,7 +51,7 @@
                                 <div class="container article-metadata">
                                     <div class="row">
                                         <div class="col-md-auto p-0">
-                                            <a class="" href="#"> f/{{ post.id_foro }}</a>
+                                            <a class="" href="{% url 'forum' forum=post.id_foro%}"> f/{{ post.id_foro }}</a>
                                         </div>
                                         <div class="col-md-auto p-0">
                                             <span class="dot mx-1">

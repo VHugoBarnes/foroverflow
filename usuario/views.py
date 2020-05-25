@@ -51,7 +51,7 @@ def user_profile(request, user_name):
 
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-        user_posts = Post.objects.filter(id_usuario=user_name_)
+        user_posts = Post.objects.filter(id_usuario=user_name_).order_by('-pk')
 
     context = {
         'u_form': u_form,
